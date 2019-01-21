@@ -1,0 +1,1 @@
+/* solamente para impresion */.bot-imprimir {	display:none;}.esp50 { display:none; }@media all {   div.saltopagina{      display: none;   }}   @media print{   div.saltopagina{       display:block;       page-break-before:always;   }}

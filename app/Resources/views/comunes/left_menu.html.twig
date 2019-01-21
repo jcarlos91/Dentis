@@ -1,0 +1,79 @@
+{% set menu_active = menu_active is defined ? menu_active : '' %}
+{% set cls_active = ' class="active"' %}
+<style>
+    #sidebar-menu>ul>li>a>span {
+        font-weight: bold !important;
+    }
+</style>
+<div class="left side-menu">
+    <div class="sidebar-inner scroll-y slimscrollleft">
+
+        <div class="clearfix">&nbsp;</div>
+
+        <div id="sidebar-menu">
+            <ul>
+                <li class=''>
+                    <a href="#"{{ menu_active == 'homepage' ? cls_active|raw : '' }}><i class='fa fa-home'></i>
+                        <span>Principal</span>
+                    </a>
+                </li>
+                <li class='has_sub'>
+                    <a href='javascript:void(0);'><i class='fa fa-file-text-o'></i>
+                        <span>Tr&aacute;mites</span>
+                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                    </a>
+                    <ul>
+                        <li class='has_sub'>
+                            <a href='javascript:void(0);'><i class='fa fa-book'></i>
+                                <span>Auxiliares y Reportes Financieros</span>
+                                <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href='#' {{ menu_active == 'contabilidad-reporte-auxiliares' ? cls_active|raw: ''}}>
+                                        <span>Reporte de Auxiliares</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href='#'{{ menu_active == 'contabilidad-balanza-comprobacion' ? cls_active|raw: ''}}>
+                                        <span>Balanza de Comprobación</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' {{ menu_active == 'contabilidad-balance-general' ? cls_active|raw: ''}}>
+                                        <span>Balance General</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' {{ menu_active == 'contabilidad-estado-resultado' ? cls_active|raw: ''}}>
+                                        <!--span>Estado de Resultados</span-->
+                                        <span>Estado de Actividades</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#'{{ menu_active == 'contabilidad-cedula-intereses' ? cls_active|raw: ''}}>
+                                        <span>C&eacute;dula de Intereses</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href='#' {{ menu_active == 'contabilidad-flujo-efectivo' ? cls_active|raw: ''}}>
+                                        <span>Estado de Flujo de Efectivo</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="clearfix"></div>
+
+        </div><!-- /#sidebar-menu -->
+
+        <div style="margin-bottom:30px;">&nbsp;</div>
+
+    </div><!-- /.sidebar-inner -->
+
+</div><!-- /.left -->

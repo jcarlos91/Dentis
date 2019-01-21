@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% set menu_active = 'homepage' %}
+{% block body %}
+
+    <div class="row">
+
+        <div class="col-md-12 portlets">
+
+            <div class="widget">
+                <div class="widget-header transparent">
+                    <h2><strong>Agenda Cita</strong></h2>
+                </div>
+
+                <div class="widget-content padding">
+
+                    {{form_start(form, {'attr': {'class': 'form-horizontal', 'id': 'formulario'} })}}
+                    {{form_errors(form)}}
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.user) }}
+                                {{ form_widget(form.user) }}
+                                {{ form_errors(form.user) }}
+                                <div id="resp"></div>
+                                {{ form_widget(form.userHidden) }}
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.startDateTime) }}
+                                {{ form_widget(form.startDateTime   ) }}
+                                {{ form_errors(form.startDateTime) }}
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.endDateTime) }}
+                                {{ form_widget(form.endDateTime   ) }}
+                                {{ form_errors(form.endDateTime) }}
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.observations) }}
+                                {{ form_widget(form.observations) }}
+                                {{ form_errors(form.observations) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear padt"><hr></div>
+
+                    <div class="col-md-12 col-xs-12" style="padding-bottom:20px;">
+                        <div class="text-center">
+                            <input class="btn btn-default" type="button" value="Regresar" style="margin-right:30px;" onclick="window.location='{{ path('homepage') }}';">
+                            {{ form_widget(form.save) }}
+                        </div>
+                    </div>
+                    {{form_end(form)}}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script>
+        var url = '{{ path('get_patients') }}';
+        var inputName = $('#event_user');
+        inputName.each(function () {
+            $.getJSON(url, { name: inputName.val() }, function (data) {
+                var data_arr = data.map(function(val){
+                    return{
+                        value: val.name,
+                        label: val.name,
+                        id: val.id
+                    };
+                });
+                auto(data_arr);
+            });
+
+            function auto(data_arr){
+                var inputHidden = $('#event_userHidden');
+                inputName.autocomplete({
+                    minLength: 2,
+                    source: data_arr,
+                    select : function(event, ui){
+                        inputName.val(ui.item.value);
+                        inputHidden.val(ui.item.id);
+                        console.log(inputHidden.val());
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

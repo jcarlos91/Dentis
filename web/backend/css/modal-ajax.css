@@ -1,0 +1,37 @@
+#modal-ajax-loading {
+    background-image: url("../img/modal-ajax-sprite.png");
+}
+
+#modal-ajax-loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -22px;
+    margin-left: -22px;
+    background-position: 0 -108px;
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 8060;
+}
+
+#modal-ajax-loading div {
+    width: 44px;
+    height: 44px;
+    background: url("../img/modal-ajax-loading.gif") center center no-repeat;
+}
+
+/*Retina graphics!*/
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5){
+
+    #modal-ajax-loading {
+        background-image: url("../img/modal-ajax-sprite@2x.png");
+        background-size: 44px 152px; /*The size of the normal image, half the size of the hi-res image*/
+    }
+
+    #modal-ajax-loading div {
+        background-image: url("../img/modal-ajax-loading@2x.gif");
+        background-size: 24px 24px; /*The size of the normal image, half the size of the hi-res image*/
+    }
+}

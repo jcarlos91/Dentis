@@ -1,0 +1,380 @@
+{% if refresh_content is not defined or refresh_content == false %}
+    <!DOCTYPE html>
+    {% if viewMode is not defined or viewMode not in(['screen', 'modal']) %}
+        {% set viewMode = 'screen' %}
+    {% endif %}
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title|default('Inicio') }} | Dentist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="author" content="Charly">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
+
+
+    {# Base Css Files #}
+    <link href="{{ asset('backend/libs/jqueryui/ui-lightness/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend/libs/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+
+    {# iconos awesome #}
+    <!--link href="{{ asset('backend/libs/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" /-->
+    <link href="{{ asset('backend/libs/bootstrap-datepicker/css/datepicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend/libs/jquery-icheck/skins/all.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/select2/css/select2.min.css') }}" rel="stylesheet" />
+
+    {# ordenar campos en tablas #}
+    <link href="{{ asset('backend/libs/sortable/sortable-theme-bootstrap.css') }}" rel="stylesheet" />
+
+    {# estilos con cambios de bootstrap y estilos propios de la plantilla #}
+    <link href="{{ asset('backend/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet" type="text/css" />
+
+    {# estilos para responsive #}
+    <!--link href="{{ asset('backend/css/style-responsive.css') }}" rel="stylesheet" /-->
+
+    <link rel="stylesheet" href="{{asset('backend/libs/bootstrap-select/bootstrap-select.min.css')}}">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    {# estilos para multiseleccion #}
+    <link href="{{ asset('backend/libs/jquery.multiple.select/multiple-select.css') }}" rel="stylesheet" />
+    <link href="{{ asset('libs/bootstrap-dialog/css/bootstrap-dialog.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/spinkit/spinkit.css') }}" rel="stylesheet" />
+
+
+    {% block stylesheets %}{% endblock %}
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="fixed-left">
+<div id="wrapper">
+    {% if viewMode == 'screen' %}
+        {{ include('comunes/top_bar.html.twig') }}
+        {#{{ include('@VarivBackNomibox/Comunes/leftmenu.html.twig') }}#}
+        {{ include('comunes/left_menu.html.twig') }}
+    {% endif %}
+
+    <div {% if viewMode == 'screen' %}class="content-page"{% endif %}>
+        <div class="content">
+            <div id="errorVista" style="display:none;" class="alert alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            {# Flash messages #}
+            {% for type, messages in app.session.flashBag.all %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message|raw|trans|raw }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% if viewMode == 'screen' %}
+                {% block heading %}
+                    <div class="page-heading">
+                        <h1>{% block body %}{% endblock %}</h1>
+                    </div>
+                {% endblock %}
+            {% endif %}
+            {% endif %}
+            <div id="body-container">
+                {% block content %}{% endblock %}
+            </div>
+            {% if refresh_content is not defined or refresh_content == false %}
+            {% if viewMode == 'screen' %}
+                {{ include('comunes/footer.html.twig') }}
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{# the overlay modal element #}
+<div class="md-overlay"></div>
+
+<script>
+    var resizefunc = [];
+</script>
+
+{# jQuery (necessary for Bootstrap's JavaScript plugins) #}
+<script src="{{ asset('backend/libs/jquery/jquery-1.11.1.min.js') }}"></script>
+<script src="{{ asset('backend/libs/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('backend/libs/jqueryui/jquery-ui-1.10.4.custom.min.js') }}"></script>
+
+{# funcionalidad del multiselect #}
+<script src="{{ asset('backend/libs/jquery.multiple.select/jquery.multiple.select.js') }}"></script>
+
+{# funcionalidad del mouse/touch-mobile #}
+<script src="{{ asset('backend/libs/jquery-ui-touch/jquery.ui.touch-punch.min.js') }}"></script>
+
+{# Mobile detect #}
+<script src="{{ asset('backend/libs/jquery-detectmobile/detect.js') }}"></script>
+
+{# animacion para menu lateral #}
+<script src="{{ asset('backend/libs/jquery-animate-numbers/jquery.animateNumbers.js') }}"></script>
+
+{# funcionalidad en menu lateral #}
+<script src="{{ asset('backend/libs/fastclick/fastclick.js') }}"></script>
+
+{# funcionalidad de scroll en menu lateral #}
+<script src="{{ asset('backend/libs/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+{# menu lateral #}
+<script src="{{ asset('backend/libs/jquery-sparkline/jquery-sparkline.js') }}"></script>
+<script src="{{ asset('js/accounting.min.js') }}"></script>
+<script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
+<script src="{{ asset('libs/select2/js/i18n/es.js') }}"></script>
+
+{# sortea columnas de tablas #}
+<script src="{{ asset('backend/libs/sortable/sortable.min.js') }}"></script>
+
+{# init app #}
+<script src="{{ asset('backend/js/init.js') }}"></script>
+
+<script src="{{ asset('backend/js/modal-ajax.js') }}"></script>
+<script src="{{ asset('backend/js/bootbox.min.js') }}"></script>
+<script src="{{ asset('libs/moment-js/moment-with-locales.min.js') }}"></script>
+<script src="{{ asset('backend/libs/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ asset('libs/bootstrap-dialog/js/bootstrap-dialog.min.js') }}"></script>
+<script src="{{ asset('backend/js/numeric-pad.js') }}"></script>
+<script src="{{ asset('backend/js/numeric-character.js') }}"></script>
+<script src="{{ asset('js/attrchange.js') }}"></script>
+<script src="{{ asset('js/overlay.js') }}"></script>
+
+<script>
+    $(function () {
+        $('select[data-hide-on-single-option]').each(function(){
+            if ($(this).find('option').length <= 1) {
+                console.log($(this).closest('div').parent().hasClass('form-group'));
+                if ($(this).closest('div').parent().hasClass('form-group')) {
+                    $(this).closest('div').parent().hide();
+                } else {
+                    $(this).closest('div').hide();
+                }
+            }
+        });
+
+        $('button[data-submit-to]').on('click', function() {
+            $(this).closest('form').attr('action', $(this).data('submit-to')).submit();
+        });
+
+        $('.modal-ajax').modalAjax();
+
+        $('[data-toggle="popover"]').popover();
+        $('.affixWidgetHeader').affix({
+            offset: {
+                top: 90
+            }
+        });
+
+        $('.datepicker-input').each(function(key, element){
+            var format = 'dd-mm-yyyy';
+            element = $(element);
+            if (element.data('dateFormat')) {
+                format = element.data('date-format');
+            }
+            element.datepicker({
+                format: format
+            });
+        });
+
+        $('.datetimepicker, .datetimepicker-input').each(function(key, element){
+            var format = 'YYYY-MM-DD HH:mm';
+            element = $(element);
+            if (element.data('dateFormat')) {
+                format = element.data('date-format');
+            }
+            element.datetimepicker({
+                locale: 'es',
+                format: format
+            });
+        });
+
+        $('.selectAll').on('change', function(evt){
+            $('input[type="checkbox"]').not($(this)).prop('checked', $(this).is(':checked')).trigger('change');
+
+        });
+        $("input.numeric_pad").numericPad();
+        $("input.numeric_character").numericCharacter();
+
+        $("input[data-fixed]").on('change', function(){
+            var value = parseFloat($(this).val()).toFixed(2);
+            if (isNaN(value)) {
+                value = 0;
+            }
+            $(this).val(value);
+        });
+
+        $('body').find('input[data-fixed]').each(function(){
+            if ($(this).val().match(/[0-9]*([\.][0-9]*)?/g)) {
+                $(this).trigger('change');
+            }
+        });
+
+        //Process to open modal and put password without ajax functionality
+        var forms = $('form.require-password-confirmation');
+        var divModal = $('div.modal-pasoc');
+        $.each(forms, function(key, form){
+            form.addEventListener('submit', function (evt) {
+                evt.preventDefault();
+                form = this;
+                var send = function(form){
+                    $(form).submit();
+                };
+                var password = '';
+                //Remove previous elements to prevent conflicts
+                $(this).find('input[name="_password"]').remove();
+                divModal.modal('show');
+                divModal.on('submit', function (e) {
+                    e.preventDefault();
+                    password = divModal.find('#_password').val();
+                    var passwordElement = $('<input type="hidden" name="_password" value="' + password + '">');
+                    $( this ).find( ':submit' ).attr( 'disabled' , 'disabled' );
+                    $(form).append(passwordElement);
+
+                    send(form);
+                });
+            });
+        });
+    });
+    function muestraAlerta(type, mensaje){
+        $('#errorVista').addClass('alert-'+type);
+        $('#errorVista').text(mensaje);
+        $('#errorVista').show();
+    }
+    function ocultaAlerta(){
+        $('#errorVista').hide();
+    }
+
+
+
+    function refresh(form) {
+        form.css('filter', 'blur(1px) grayscale(5)');
+        form.attr('novalidate', 'novalidate');
+        form.append($('<input name="changed_option" type="hidden"/>').val('1'));
+        detachEvents();
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: $(form[0]).serialize(),
+            success: function (data) {
+                $('#body-container').html(data);
+                attachEvents();
+            }
+        });
+    }
+
+    //            $(document).ajaxStart(function() { Pace.restart(); });
+
+    function detachEvents() {
+        $('.reload-data').unbind('change').unbind('ifChanged').unbind('click');
+        $('[data-widget="remove"]').unbind('click');
+        $('a[data-prototype]').unbind('click');
+        $('input[type="submit"]').unbind('click');
+        $('.general-gain').unbind('keyup');
+        $('[data-toggle="ajaxModal"]').unbind('click');
+        $('.remove-element').unbind('click');
+        $('button[type="button"].reload-data, button[type="submit"].reload-data, a.reload-data').unbind('click');
+        $('[data-ckeditor]').each(function () {
+            if (CKEDITOR.instances[$(this).attr('id')]) {
+                CKEDITOR.instances[$(this).attr('id')].destroy();
+            }
+        });
+    }
+
+    function attachEvents() {
+
+        $('input#search').keypress(function(e){
+            if(e.which === 13) {
+                var form = $(this).closest('form')[0];
+                form.submit();
+            }
+        });
+
+        $('select#search').change(function(e){
+            var form = $(this).closest('form')[0];
+            form.submit();
+        });
+
+        $('[data-toggle="ajaxModal"]').on('click',
+                function (e) {
+                    $('#ajaxModal').remove();
+                    e.preventDefault();
+                    var $this = $(this)
+                            , $remote = $this.data('remote') || $this.attr('href')
+                            ,
+                            $modal = $('<div class="modal" id="ajaxModal"><div class="modal-dialog" style="width: 216mm"><div class="modal-body"></div></div></div>');
+                    $('body').append($modal);
+                    $modal.modal({backdrop: 'static', keyboard: true});
+                    $.get($remote, function (data) {
+                        $modal.find('.modal-body').html(data);
+                    });
+
+                }
+        );
+
+
+
+        // $('form').attr('onsubmit', 'return false;');
+        // $('.datepicker').datepicker({
+        //     'format': 'yyyy-mm-dd',
+        //     'regional': 'es'
+        // });
+
+        $('button[type="submit"]').on('mouseup', function () {
+            $(this).closest('form').removeAttr('onsubmit');
+        });
+
+        $('.reload-data').unbind('change').on('change', function () {
+            var form = $(this).closest('form');
+            refresh(form);
+        }).unbind('ifChanged').on('ifChanged', function () {
+            var form = $(this).closest('form');
+            refresh(form);
+        });
+
+        $('button[type="button"].reload-data, button[type="submit"].reload-data, a.reload-data').unbind('click').on('click', function () {
+            var form = $(this).closest('form');
+            refresh(form);
+        });
+
+        $('.general-gain').unbind('keyup').on('keyup', function () {
+            $('.gain-amount').val($(this).val());
+        });
+
+        $('[data-widget="remove"]').unbind('click').on('click', function () {
+            var form = $(this).closest('form');
+            $(this).closest($(this).data('closer-target')).remove();
+            refresh(form);
+        });
+
+        $('a[data-prototype]').unbind('click').on('click', function () {
+            var start = $(this).data('prototype-start');
+            var limit = $(this).data('prototype-limit');
+            var prototype = $(this).data('prototype');
+            var target = $(this).data('prototype-target');
+            prototype = prototype.replace(/__name__/g, start+1);
+
+            $(target).append($(prototype).addClass('hidden'));
+            var form = $(this).closest('form');
+            refresh(form);
+
+        });
+
+        $('.remove-element').unbind('click').on('click', function () {
+            var form = $(this).closest('form');
+            $($(this).data('target')).remove();
+            refresh(form);
+        });
+    }
+    attachEvents();
+
+</script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>
+{% endif %}

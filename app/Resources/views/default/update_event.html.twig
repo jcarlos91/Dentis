@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% set menu_active = 'homepage' %}
+{% block body %}
+
+    <div class="row">
+
+        <div class="col-md-12 portlets">
+
+            <div class="widget">
+                <div class="widget-header transparent">
+                    <h2><strong>Agenda Cita</strong></h2>
+                </div>
+
+                <div class="widget-content padding">
+
+                    {{form_start(form, {'attr': {'class': 'form-horizontal', 'id': 'formulario'} })}}
+                    {{form_errors(form)}}
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+                            <div class="col-md-3 col-xs-12">
+                                <label  >Paciente</label>
+                                <input class="form-control" type="text" value="{{ patient.userdetail.__toString }}" disabled>
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.startDateTime) }}
+                                {{ form_widget(form.startDateTime   ) }}
+                                {{ form_errors(form.startDateTime) }}
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.endDateTime) }}
+                                {{ form_widget(form.endDateTime   ) }}
+                                {{ form_errors(form.endDateTime) }}
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                {{ form_label(form.observations) }}
+                                {{ form_widget(form.observations) }}
+                                {{ form_errors(form.observations) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear padt"><hr></div>
+
+                    <div class="col-md-12 col-xs-12" style="padding-bottom:20px;">
+                        <div class="text-center">
+                            <input class="btn btn-default" type="button" value="Regresar" style="margin-right:30px;" onclick="window.location='{{ path('homepage') }}';">
+                            {{ form_widget(form.save) }}
+                        </div>
+                    </div>
+                    {{form_end(form)}}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% set menu_active = 'homepage' %}
+{% block body %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="widget-header">
+                        <h2 class="bold">{{ 'now'|localizeddate('none', 'none', app.request.locale, "America/Mexico_City", "cccc d MMMM Y")|trans }}</h2>
+                        <div style="float:right; position:relative; top:-42px; right:40px; z-index:2;">
+                            <button class="btn btn-success" onclick="window.location='{{ path('new_event') }}'">Nueva cita</button>
+                        </div>
+                    </div><!-- /.widget-header -->
+                    <div class="row">
+                        {% if events|length > 0 %}
+                            {% for event in events %}
+                                {% set array = event.description|split('-') %}
+                                <div class="col-6 col-md-3">
+                                    <div class="widget-content padding">
+                                        <div class="panel-group accordion-toggle" id="accordion-m2">
+                                            <div class="panel panel-default">
+                                                <div id="accordion3" class="panel">
+                                                    <div class="panel-body" {% if "now"|date('H:i:s') >= event.start.dateTime|date('H:i:s') and "now"|date('H:i:s') <= event.end.dateTime|date('H:i:s')  %} style="color: #1f8dd6;" {% endif %}>
+                                                        <div class="card center">
+                                                            <div class="card-body" >
+                                                                <h5 class="card-title">{{ event.summary }}</h5>
+                                                                <p class="card-text">{{ event.start.dateTime|date('H:i:s') }} | {{ event.end.dateTime|date('H:i:s') }}</p>
+                                                                <p class="card-text">{{ array[1] }}</p>
+                                                            </div>
+                                                            <div class="card-footer text-muted">
+                                                                <button class="btn btn-primary"><a class="text" href="{{ path('update_event',{'event':event.id,'meeting':array[0]}) }}">Actualizar</a></button>
+                                                                <button class="btn btn-success"><a class="text" href="{{ path('delete_event',{'event':event.id,'meeting':array[0]}) }}">Eliminar</a></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-6 col-md-12">
+                                <div class="widget-content padding">
+                                    <div class="panel-group accordion-toggle" id="accordion-m2">
+                                        <div class="panel panel-default">
+                                            <div id="accordion3" class="panel">
+                                                <div class="panel-body">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">No hay citas para el día de hoy</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .text {color:#ffffff; text-decoration:none}
+        .text:hover {color:#000000; text-decoration:none}
+    </style>
+{% endblock %}
